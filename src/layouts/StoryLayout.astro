@@ -1,0 +1,98 @@
+---
+const { frontmatter } = Astro.props;
+const title = `${frontmatter.title} — Ang Mingsong`;
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/global.css" />
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="/" class="nav-name">Ang Mingsong</a>
+    <div class="nav-links">
+      <a href="/stories">Stories</a>
+      <a href="/about">About</a>
+      <a href="/conversations">Conversations</a>
+      <a href="/connect">Connect</a>
+    </div>
+  </nav>
+
+  <main>
+    <article class="story-page">
+      <h1 class="story-page-title">{frontmatter.title}</h1>
+      <slot />
+    </article>
+
+    <nav class="story-bottom-nav" id="storyNav">
+      <a href="/connect" id="connectLink">What stayed with you?</a>
+      <a href="/stories" class="subtle-link">Read all stories</a>
+    </nav>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="/stories">Stories</a>
+      <a href="/about">About</a>
+      <a href="/conversations">Conversations</a>
+      <a href="/connect">Connect</a>
+    </div>
+    <span class="copyright">&copy; Ang Mingsong</span>
+  </footer>
+
+  <script>
+    const sequences = {
+      '1': [
+        { slug: 'the-room-changed-when-i-did', title: 'The Room Changed When I Did' },
+        { slug: 'he-decided-to-be-seen-everything-followed', title: 'He Decided to Be Seen. Everything Followed.' },
+        { slug: 'the-day-my-past-walked-in-before-i-did', title: 'The Day My Past Walked In Before I Did' },
+        { slug: 'what-closed-doors-actually-cost', title: 'What Closed Doors Actually Cost' },
+      ],
+      '2': [
+        { slug: 'i-didnt-choose-this-path-then-i-did', title: "I Didn't Choose This Path. Then I Did." },
+        { slug: 'the-day-my-past-walked-in-before-i-did', title: 'The Day My Past Walked In Before I Did' },
+        { slug: 'what-closed-doors-actually-cost', title: 'What Closed Doors Actually Cost' },
+        { slug: 'i-said-yes-when-i-already-knew', title: 'I Said Yes When I Already Knew' },
+        { slug: 'the-climb-back-nobody-talks-about', title: 'The Climb Back Nobody Talks About' },
+      ],
+      '3': [
+        { slug: 'the-room-changed-when-i-did', title: 'The Room Changed When I Did' },
+        { slug: 'the-day-my-past-walked-in-before-i-did', title: 'The Day My Past Walked In Before I Did' },
+        { slug: 'i-said-yes-when-i-already-knew', title: 'I Said Yes When I Already Knew' },
+        { slug: 'what-closed-doors-actually-cost', title: 'What Closed Doors Actually Cost' },
+        { slug: 'i-planned-myself-out-of-the-picture', title: 'I Planned Myself Out of the Picture' },
+      ],
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const profile = params.get('profile');
+    const currentSlug = window.location.pathname.split('/').pop();
+    const storyNav = document.getElementById('storyNav');
+    const connectLink = document.getElementById('connectLink');
+
+    if (profile && sequences[profile]) {
+      const seq = sequences[profile];
+      const currentIndex = seq.findIndex(s => s.slug === currentSlug);
+
+      if (currentIndex !== -1 && currentIndex < seq.length - 1) {
+        const next = seq[currentIndex + 1];
+        const nextLink = document.createElement('a');
+        nextLink.href = `/stories/${next.slug}?profile=${profile}`;
+        nextLink.innerHTML = `Next story \u2192 <span>${next.title}</span>`;
+        nextLink.className = 'next-story-link';
+        storyNav.prepend(nextLink);
+      } else if (currentIndex === seq.length - 1) {
+        connectLink.remove();
+        const endCta = document.createElement('a');
+        endCta.href = '/connect';
+        endCta.className = 'end-cta-card';
+        endCta.innerHTML = '<h3>What stayed with you?</h3><p>You\u2019ve reached the end of this path. Share what resonated.</p>';
+        storyNav.prepend(endCta);
+      }
+    }
+  </script>
+</body>
+</html>

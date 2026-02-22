@@ -1,0 +1,37 @@
+---
+const { title = 'Ang Mingsong' } = Astro.props;
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/global.css" />
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="/" class="nav-name">Ang Mingsong</a>
+    <div class="nav-links">
+      <a href="/stories">Stories</a>
+      <a href="/about">About</a>
+      <a href="/conversations">Conversations</a>
+      <a href="/connect">Connect</a>
+    </div>
+  </nav>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="/stories">Stories</a>
+      <a href="/about">About</a>
+      <a href="/conversations">Conversations</a>
+      <a href="/connect">Connect</a>
+    </div>
+    <span class="copyright">&copy; Ang Mingsong</span>
+  </footer>
+</body>
+</html>

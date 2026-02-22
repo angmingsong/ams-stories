@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const allStories = await Astro.glob('./*.md');
+
+// Curated order: 1, 2, 3, 6, 4, 9, 7, 5
+const storyOrder = [
+  'i-didnt-choose-this-path-then-i-did',
+  'the-day-my-past-walked-in-before-i-did',
+  'what-closed-doors-actually-cost',
+  'i-planned-myself-out-of-the-picture',
+  'i-said-yes-when-i-already-knew',
+  'he-decided-to-be-seen-everything-followed',
+  'the-room-changed-when-i-did',
+  'the-climb-back-nobody-talks-about',
+];
+
+const sortedStories = storyOrder
+  .map(slug => allStories.find(s => s.url?.endsWith(slug)))
+  .filter(Boolean);
+---
+<BaseLayout title="Stories — Ang Mingsong">
+  <section class="stories-listing">
+    <h1>Stories</h1>
+    <p>Most of them are about mistakes. Some took a decade to understand. None come with neat answers.</p>
+
+    <div class="story-cards">
+      {sortedStories.map((story) => (
+        <a href={story.url} class="story-card">
+          <h2>{story.frontmatter.title}</h2>
+          <span class="read-arrow">Read →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
