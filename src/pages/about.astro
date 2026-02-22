@@ -1,17 +1,50 @@
-<section class="about-links">
-  <a href={`${base}/conversations`}>See where I've been</a>
-  <a href={`${base}/connect`}>Share what stayed with you</a>
-</section>
-```
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title="About — Ang Mingsong">
+  <section class="about-content">
+    <p>I built this site because I kept having the same conversation.</p>
+    <p>An engineer would sit across from me — sometimes a mentee, sometimes someone I'd worked with on a project — and at some point they'd say a version of the same thing: I'm doing good work, but nobody sees it. Or: I know I need to make a change, but I don't know how to talk about what I do. Or: I built something real, and I still can't explain why it matters.</p>
+    <p>Every time, I'd end up telling them a story from my own career. Not advice. A story. Something I'd got wrong, something I'd learned too late, something I wished someone had told me fifteen years ago. And almost every time, the same thing would happen — they'd go quiet for a moment, and then they'd say: that sounds like me.</p>
+    <p>That's what this site is. A collection of stories. Most of them are about mistakes. Some of them took me a decade to understand. None of them come with neat answers. And the collection isn't finished — I'm still making the mistakes that become the next ones.</p>
+    <p>I've spent fifteen years learning how to connect people through stories. It started as a profession. It became something I can't put down. This site is where I practice it for myself — not to teach, but to trade. I share mine. I hope you'll find yours. Somewhere in the exchange, we both walk away a little less alone in whatever we're figuring out.</p>
+    <p>That's why this site exists. Not as a résumé. As a mirror. If something in here looks familiar, it's probably because it is.</p>
+  </section>
 
-And add `const base = import.meta.env.BASE_URL;` in the frontmatter at the top (between the `---` lines), after the import line.
+  <section class="photo-placeholder">
+    <div>Photo</div>
+  </section>
 
-Save all files. Then push:
-```
-git add .
-```
-```
-git commit -m "fix css and link paths"
-```
-```
-git push
+  <section class="short-version">
+    <div class="short-version-card">
+      <p class="short-version-label">The short version</p>
+      <p>Ang Mingsong is an engineer turned storyteller and mentor. He founded Mediashock in 2008, a Singapore-based content agency that helps technology companies — including Google Cloud, AWS, DBS, and Singtel — communicate complex technical subjects to the people who need to hear them. Over fifteen years, he has produced and directed hundreds of webinars and content programs across APAC, specialising in subjects ranging from cloud infrastructure to quantum cryptography. He speaks to engineering teams and organisations about visibility, career transitions, and the discipline of being heard. He mentors engineers and technical founders navigating the gap between doing good work and having it recognised.</p>
+    </div>
+  </section>
+
+  <section class="topics">
+    <p class="topics-heading">What I talk about</p>
+    <div class="topic">
+      <h3>The engineer who becomes visible</h3>
+      <p>What happens when technical professionals learn to tell their own story. Why most resist it. What changes when they stop.</p>
+    </div>
+    <div class="topic">
+      <h3>Closed doors and the cost of staying safe</h3>
+      <p>The career decisions that feel responsible in the moment and expensive in hindsight. For teams navigating transitions, reorganisations, or the question of what's next.</p>
+    </div>
+    <div class="topic">
+      <h3>Storytelling for people who don't call themselves storytellers</h3>
+      <p>How engineers, founders, and technical teams can communicate what they do without becoming someone they're not. Practical. No performance required.</p>
+    </div>
+    <div class="topic">
+      <h3>The climb back</h3>
+      <p>What recovery actually looks like after professional failure. Not a motivational talk. An honest one.</p>
+    </div>
+  </section>
+
+  <section class="about-links">
+    <a href={`${base}/conversations`}>See where I've been</a>
+    <a href={`${base}/connect`}>Share what stayed with you</a>
+  </section>
+</BaseLayout>
