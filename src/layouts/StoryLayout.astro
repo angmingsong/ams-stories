@@ -1,6 +1,8 @@
 ---
+import '../styles/global.css';
 const { frontmatter } = Astro.props;
 const title = `${frontmatter.title} — Ang Mingsong`;
+const base = import.meta.env.BASE_URL;
 ---
 <html lang="en">
 <head>
@@ -8,16 +10,15 @@ const title = `${frontmatter.title} — Ang Mingsong`;
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title}</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles/global.css" />
 </head>
 <body>
   <nav class="site-nav">
-    <a href="/" class="nav-name">Ang Mingsong</a>
+    <a href={`${base}/`} class="nav-name">Ang Mingsong</a>
     <div class="nav-links">
-      <a href="/stories">Stories</a>
-      <a href="/about">About</a>
-      <a href="/conversations">Conversations</a>
-      <a href="/connect">Connect</a>
+      <a href={`${base}/stories`}>Stories</a>
+      <a href={`${base}/about`}>About</a>
+      <a href={`${base}/conversations`}>Conversations</a>
+      <a href={`${base}/connect`}>Connect</a>
     </div>
   </nav>
 
@@ -28,22 +29,22 @@ const title = `${frontmatter.title} — Ang Mingsong`;
     </article>
 
     <nav class="story-bottom-nav" id="storyNav">
-      <a href="/connect" id="connectLink">What stayed with you?</a>
-      <a href="/stories" class="subtle-link">Read all stories</a>
+      <a href={`${base}/connect`} id="connectLink">What stayed with you?</a>
+      <a href={`${base}/stories`} class="subtle-link">Read all stories</a>
     </nav>
   </main>
 
   <footer>
     <div class="footer-links">
-      <a href="/stories">Stories</a>
-      <a href="/about">About</a>
-      <a href="/conversations">Conversations</a>
-      <a href="/connect">Connect</a>
+      <a href={`${base}/stories`}>Stories</a>
+      <a href={`${base}/about`}>About</a>
+      <a href={`${base}/conversations`}>Conversations</a>
+      <a href={`${base}/connect`}>Connect</a>
     </div>
     <span class="copyright">&copy; Ang Mingsong</span>
   </footer>
 
-  <script>
+  <script define:vars={{ base }}>
     const sequences = {
       '1': [
         { slug: 'the-room-changed-when-i-did', title: 'The Room Changed When I Did' },
@@ -69,7 +70,7 @@ const title = `${frontmatter.title} — Ang Mingsong`;
 
     const params = new URLSearchParams(window.location.search);
     const profile = params.get('profile');
-    const currentSlug = window.location.pathname.split('/').pop();
+    const currentSlug = window.location.pathname.replace(base, '').replace('/stories/', '').replace('/', '');
     const storyNav = document.getElementById('storyNav');
     const connectLink = document.getElementById('connectLink');
 
@@ -80,14 +81,14 @@ const title = `${frontmatter.title} — Ang Mingsong`;
       if (currentIndex !== -1 && currentIndex < seq.length - 1) {
         const next = seq[currentIndex + 1];
         const nextLink = document.createElement('a');
-        nextLink.href = `/stories/${next.slug}?profile=${profile}`;
+        nextLink.href = `${base}/stories/${next.slug}?profile=${profile}`;
         nextLink.innerHTML = `Next story \u2192 <span>${next.title}</span>`;
         nextLink.className = 'next-story-link';
         storyNav.prepend(nextLink);
       } else if (currentIndex === seq.length - 1) {
         connectLink.remove();
         const endCta = document.createElement('a');
-        endCta.href = '/connect';
+        endCta.href = `${base}/connect`;
         endCta.className = 'end-cta-card';
         endCta.innerHTML = '<h3>What stayed with you?</h3><p>You\u2019ve reached the end of this path. Share what resonated.</p>';
         storyNav.prepend(endCta);
